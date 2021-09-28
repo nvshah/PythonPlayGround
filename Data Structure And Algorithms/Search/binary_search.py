@@ -1,15 +1,23 @@
-def binarySearch(arr, target):
+def orderAgnosticBinarySearch(arr, target, nonDecreasing=None, start=0, end=-1):
     '''
     Binary Search - Basic Implementation i.e Order Agnostic Binary Search
     Assuming arr is sorted
     '''
     if not arr:
         raise Exception("array is empty")
-    start, end = 0, len(arr) - 1
+    #start, end = 0, len(arr) - 1
+    if end == -1:
+        end = len(arr) - 1
+
     if arr[0] == arr[-1]:
         # All elements in {arr} are same
         return 0 if arr[0] == target else -1
-    if arr[0] < arr[-1]:
+
+    if not nonDecreasing:
+        nonDecreasing = arr[0] < arr[-1]
+
+    #if arr[0] < arr[-1]:
+    if nonDecreasing:
         # {arr} is in non-decreasing Order
         while start <= end:
             mid = start + ((end - start) // 2)
@@ -35,7 +43,6 @@ def binarySearch(arr, target):
                 return mid
     return -1
 
-
 def binarySearch_rec(arr, t, s, e):
     '''
     Binary Search using Recurssive approach
@@ -54,6 +61,20 @@ def binarySearch_rec(arr, t, s, e):
     else:
         return binarySearch_rec(arr, t, mid + 1, e)
 
+def binary_search_plain(arr, target, start=0, end=-1):
+    '''
+    Binary Search for sorted array
+    '''
+    end == end if end != -1 else len(arr)-1
+    while start <= end:
+        mid = start + ((end - start) // 2)
+        if target > arr[mid]:
+            start = mid + 1
+        elif target < arr[mid]:
+            end = mid - 1
+        else:
+            return mid
+    return -1
 
 # Deprecated for fromLeft & fromRight As that can go to O(log n) in worst case
 # i.e all elements except first & last are target
