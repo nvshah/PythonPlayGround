@@ -1,6 +1,7 @@
 from typing import List
 
 
+# 1
 def order_agnostic_binary_search(arr, target, nonDecreasing=None, start=0, end=-1):
     ''' Order Agnostic Binary Search '''
     if not arr:
@@ -42,6 +43,7 @@ def order_agnostic_binary_search(arr, target, nonDecreasing=None, start=0, end=-
     return -1
 
 
+# 2
 def binary_search_rec(arr, t, s, e):
     ''' BS using recurssive approach'''
     if s > e:
@@ -55,9 +57,10 @@ def binary_search_rec(arr, t, s, e):
         return binary_search_rec(arr, t, mid + 1, e)
 
 
+# 3
 def binary_search_plain(arr, target, start=0, end=-1):
     ''' Binary Search for Sorted Array using Iterator Approach '''
-    end == end if end != -1 else len(arr) - 1
+    end = end if end != -1 else len(arr) - 1
     while start <= end:
         mid = start + ((end - start) // 2)
         if target > arr[mid]:
@@ -69,6 +72,7 @@ def binary_search_plain(arr, target, start=0, end=-1):
     return -1
 
 
+# 4
 def floor(arr, target):
     '''
     find the position of element that is first-most >= target using BS
@@ -87,6 +91,7 @@ def floor(arr, target):
     return start
 
 
+# 5
 def ceil(arr, target):
     '''
     find the position of element that is first-most <= target using BS
@@ -105,6 +110,7 @@ def ceil(arr, target):
     return end
 
 
+# 6
 def near(arr, target):
     '''
     find the position of element that is near to target using BS
@@ -125,6 +131,7 @@ def near(arr, target):
     return end if abs(arr[start] - target) > abs(arr[end] - target) else start
 
 
+# 7
 def start_and_end(arr, target):
     def bs(arr, target, leftMost=True):
         '''
@@ -155,6 +162,7 @@ def start_and_end(arr, target):
     return left, right
 
 
+# 8
 def infinite_array_search(arr, target):
     '''
     Search target in an infinite sorted array i.e Length is not available to you
@@ -177,6 +185,7 @@ def infinite_array_search(arr, target):
     return binary_search_plain(arr, target, s, e)
 
 
+# 9
 def find_peak_index_in_mountain(arr: List[int]) -> int:
     '''
     arr -> Increasing then Decreasing after some peak val
@@ -198,11 +207,13 @@ def find_peak_index_in_mountain(arr: List[int]) -> int:
     return s
 
 
+# 10
 def find_peak_element_in_mountain(nums: List[int]) -> int:
     idx = find_peak_index_in_mountain(nums)
     return nums[idx]
 
 
+# 11
 def find_element_in_mountain(nums: List[int], target: int):
     peak_idx = find_peak_index_in_mountain(nums)
     if nums[peak_idx] == target:
@@ -215,6 +226,107 @@ def find_element_in_mountain(nums: List[int], target: int):
             # Search in Right part i.e non-increasing part
             idx = order_agnostic_binary_search(nums, target, nonDecreasing=False, start=peak_idx + 1, end=len(arr) - 1)
     return idx
+
+
+# 12
+def find_pivot_in_rotated_sorted_array(nums: List[int]) -> int:
+    '''
+    Find the index of maximum number if array is rotated atleast
+    NOTE - pivot is largest elem because there can be only chance that
+           largest elem,the following element will always be smallest
+    (Assuming Unique elements in array)
+    :param nums: list of rotated sorted array
+    :return: index of maximum number if array is rotated (i.e except first & last element index)
+    '''
+    s, e = 0, len(nums) - 1
+    while s <= e:
+        m = s + (e - s) // 2
+        if m < e and nums[m] > nums[m + 1]:
+            return m  # pivot found i.e Peak -> smallest
+        elif m > s and nums[m - 1] > nums[m]:
+            return m - 1  # pivot found i.e Peak -> smallest
+        elif nums[s] < nums[m]:
+            # increasing left part so max element will lie in right part
+            s = m + 1
+        else:
+            # nums[s] > nums[m]
+            # peak can be in left part (as all elem in right part is smaller than left part)
+            e = m - 1
+    return -1
+
+
+# 13
+def find_pivot_in_rotated_sorted_array_with_duplicates(nums: List[int]) -> int:
+    '''
+    Find the index of maximum number if array is rotated atleast
+    NOTE - pivot is largest elem because there can be only chance that
+           largest elem,the following element will always be smallest
+    (Array may include duplicate elements in array)
+    :param nums: list of rotated sorted array
+    :return: index of maximum number if array is rotated (i.e except first & last element index)
+
+    1) num[s] == nums[m] == nums[e]
+        in which case we will ignore s & e items after pivot check
+    2) When num[s] == nums[m]
+       - It delineats that s -> m all elements are same so search in right (after considering first point)
+    '''
+
+    s, e = 0, len(nums) - 1
+    while s <= e:
+        m = s + (e - s) // 2
+        if m < e and nums[m] > nums[m + 1]:
+            return m  # pivot found i.e Peak -> smallest
+        elif m > s and nums[m - 1] > nums[m]:
+            return m - 1  # pivot found i.e Peak -> smallest
+        elif nums[s] == nums[m] == nums[e]:
+            # check and ignore start
+            if s < e and nums[s] > nums[s + 1]:
+                return s
+            else:
+                s += 1
+            # check and ignore end
+            if e > s and nums[e - 1] > nums[e]:
+                return e - 1
+            else:
+                e -= 1
+        elif nums[s] < nums[m]:
+            # increasing left part so max element will lie in right part
+            # (here if s == m then also it means that s->m all are equal elements)
+            s = m + 1
+        else:
+            # nums[s] > nums[m]
+            # peak can be in left part (as all elem in right part is smaller than left part)
+            e = m - 1
+    return -1
+
+
+# 14
+def search_in_rotated_sorted_array(nums: List[int], target: int, unique=False) -> int:
+    if unique:
+        kingMaker = find_pivot_in_rotated_sorted_array(nums)
+    else:
+        kingMaker = find_pivot_in_rotated_sorted_array_with_duplicates(nums)
+    # if kingMaker is found i.e we have found 2 asc sorted array
+    if kingMaker == -1:
+        # No rotation on nums
+        binary_search_plain(nums, target)
+    elif nums[kingMaker] == target:
+        return kingMaker
+    elif target < nums[0]:
+        # search in right part of kingmaker (i.e lower values bunch)
+        binary_search_plain(nums, target, kingMaker + 1)
+    else:
+        # search in left part of kingmaker (i.e higher values bunch)
+        binary_search_plain(nums, target, 0, kingMaker)
+
+
+# 15
+def find_rotation_count_in_sorted_array(nums: List[int], unique=False) -> int:
+    if unique:
+        pivot_idx = find_pivot_in_rotated_sorted_array(nums)
+    else:
+        pivot_idx = find_pivot_in_rotated_sorted_array_with_duplicates(nums)
+    return pivot_idx + 1
 
 
 if __name__ == '__main__':
