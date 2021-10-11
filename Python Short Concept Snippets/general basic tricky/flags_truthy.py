@@ -14,3 +14,7 @@ if x or y or z:
 
 if any((x, y, z)):
     print('passed')
+
+
+print(bool([()]))  # True
+

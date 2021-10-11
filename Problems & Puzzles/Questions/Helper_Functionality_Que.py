@@ -9,7 +9,7 @@ def doTransposeOf(mat):
 
 
 def reverseBy2Pointer(l):
-    '''inplace'''
+    '''inplace - reverse a list'''
     for i in range(len(l) // 2):
         l[i], l[-i-1] = l[-i-1], l[i]  # Swap
     return l

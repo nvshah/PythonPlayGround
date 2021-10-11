@@ -2,7 +2,7 @@ import itertools as it
 
 # ----> MODIFY lisT
 
-# APproach 1
+# Approach 1
 import timeit
 
 

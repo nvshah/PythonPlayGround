@@ -7,3 +7,5 @@
 7) Find in Mountain Array   (https://leetcode.com/problems/find-in-mountain-array/)
 8) search in rotated sorted array
 9) How many times the array is rotated
+
+10) Search in matrix (Row-Wise & Col-Wise Sorted)

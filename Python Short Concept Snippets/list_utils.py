@@ -1,4 +1,3 @@
-import operator
 from collections import Counter as ctr
 from typing import List
 import itertools as it
@@ -22,6 +21,53 @@ def canEitherListBeEaten(l1: list, l2: list):
     else:
         return True
     return False
+
+def minmax(lst: List[int]):
+    minimum = lst[0]
+    maximum = lst[0]
+
+    for n in lst[1:]:
+        if n > maximum:
+            maximum = n
+        elif n < minimum:
+            minimum = n
+    return minimum, maximum
+
+# deprecated see second approach down below
+def list_intersection(l1, l2):
+    l1_ctr = ctr(l1)
+    l2_ctr = ctr(l2)
+
+    l1_set, l2_set = set(l1), set(l2)
+    common_members = l1_set.intersection(l2_set)
+
+    if not common_members:
+        return []
+
+    ans = []
+
+    for m in common_members:
+        ans.extend(it.repeat(m, min(l1_ctr[m], l2_ctr[m])))
+
+    return ans
+
+def list_intersection_2(l1, l2):
+    '''
+        Compelxity -> O(n + m) , n = len(l1) & m = len(l2)
+        Using HashMap | HashTable | Dictionary
+    '''
+    if len(l1) > len(l2):
+        s_l, b_l = l2, l1
+    else:
+        s_l, b_l = l1, l2
+    freq_s_l = ctr(s_l)
+    ans = []
+    for n in b_l:
+        cnt = freq_s_l.get(n, 0)
+        if cnt:
+            ans.append(n)
+            freq_s_l[n] -= 1
+    return ans
 
 
 # Approach 1 (In-Place) , Works only with list

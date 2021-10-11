@@ -133,6 +133,9 @@ def near(arr, target):
 
 # 7
 def start_and_end(arr, target):
+    '''
+    Get the leftmost & rightmost index of target in arr
+    '''
     def bs(arr, target, leftMost=True):
         '''
         Assuming array is non-decreasing order
@@ -161,6 +164,7 @@ def start_and_end(arr, target):
     right = bs(arr, target, leftMost=False) if left != -1 else -1
     return left, right
 
+# ---- Intermediate ----
 
 # 8
 def infinite_array_search(arr, target):
@@ -215,11 +219,21 @@ def find_peak_element_in_mountain(nums: List[int]) -> int:
 
 # 11
 def find_element_in_mountain(nums: List[int], target: int):
+    '''
+    MOUNTAIN ARRAY Property :-
+    There exists some i with 0 < i < arr.length - 1 such that:
+    arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+    arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+    :param nums: mountain array
+    :param target: to be searched
+    :return: index
+    '''
     peak_idx = find_peak_index_in_mountain(nums)
     if nums[peak_idx] == target:
         return peak_idx
     idx = -1
     if peak_idx != -1:
+        # NOTE :- Here assume that there is only 1 Peak in Mountain Array
         # Search in Left Part i.e non-decreasing part
         idx = order_agnostic_binary_search(nums, target, nonDecreasing=True, start=0, end=peak_idx - 1)
         if idx == -1:
@@ -227,6 +241,7 @@ def find_element_in_mountain(nums: List[int], target: int):
             idx = order_agnostic_binary_search(nums, target, nonDecreasing=False, start=peak_idx + 1, end=len(arr) - 1)
     return idx
 
+# ---- Advance ----
 
 # 12
 def find_pivot_in_rotated_sorted_array(nums: List[int]) -> int:
@@ -289,7 +304,7 @@ def find_pivot_in_rotated_sorted_array_with_duplicates(nums: List[int]) -> int:
                 return e - 1
             else:
                 e -= 1
-        elif nums[s] < nums[m]:
+        elif nums[s] <= nums[m]:
             # increasing left part so max element will lie in right part
             # (here if s == m then also it means that s->m all are equal elements)
             s = m + 1
