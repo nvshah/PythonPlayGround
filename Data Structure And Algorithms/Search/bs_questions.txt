@@ -9,3 +9,9 @@
 9) How many times the array is rotated
 
 10) Search in matrix (Row-Wise & Col-Wise Sorted)
+
+11) integer Square root of given number
+
+------
+
+=> Guess Number (Picked randomly from 1 -> n)

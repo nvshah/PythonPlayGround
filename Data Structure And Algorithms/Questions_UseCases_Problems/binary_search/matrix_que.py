@@ -24,19 +24,19 @@ def search_in_matrix_1(matrix: List[List[int]], target: int)->Tuple[int, int]:
     r, c = l, l - 1
     while r < l and c >= 0:
         if matrix[r][c] == target:
-            return (r, c)
+            return r, c
         elif target > matrix[r][c]:
             # Ignore current row
             r += 1
         else:
             # Ignore current col
             c -= 1
-    return (-1, -1)
+    return -1, -1
 
 
-def searchMatrix(matrix: List[List[int]], target: int) -> bool:
+def searchMatrix(matrix: List[List[int]], target: int) -> Tuple[int, int]:
     '''
-    :param matrix: matrix where row is sorted & forst element of each row is > than last element of prev row
+    :param matrix: matrix where row is sorted & first element of each row is > than last element of prev row
     :param target: to be search in matrix
     :return: (r, c)
     '''
@@ -45,7 +45,7 @@ def searchMatrix(matrix: List[List[int]], target: int) -> bool:
         m = ceil((r_s + r_e) / 2) # giving priority to rhs idx
         num = matrix[m][0]
         if num == target:
-            return (m, 0)
+            return m, 0
         elif target > num:
             r_s = m  # target can be in middle row so r_s -> m
         else:

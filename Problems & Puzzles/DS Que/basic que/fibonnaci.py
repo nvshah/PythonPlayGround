@@ -61,6 +61,12 @@ def fibonacci_a3(length):
     lv = 0
     return list(it.accumulate([0, 1, *[0]*(length-2)], lambda x, y, : [print(x, y, lv),locals().update(lv=x), x+y][2]))
 
+@functools.cache
+def fib(n):
+    print('calculating fib for: ', n)
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)
 
 if __name__ == '__main__':
     #series = fibonacci_a1(2)

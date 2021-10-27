@@ -73,7 +73,7 @@ def binary_search_plain(arr, target, start=0, end=-1):
 
 
 # 4
-def floor(arr, target):
+def ceil(arr, target):
     '''
     find the position of element that is first-most >= target using BS
     '''
@@ -92,7 +92,7 @@ def floor(arr, target):
 
 
 # 5
-def ceil(arr, target):
+def floor(arr, target):
     '''
     find the position of element that is first-most <= target using BS
     '''
@@ -109,6 +109,33 @@ def ceil(arr, target):
             return mid
     return end
 
+def isqrt(n):
+    '''
+    math.isqrt() via Binary Search Floor
+
+    Logic ->
+
+    Let's consider
+    number - n, divisor - d
+
+    if d divides n into exact d parts then we can say that d is exact square root of n
+    if d divides n into more than d parts so -> need to lower the divider
+    if d divides n into less than d parts sp -> need to increase the divider
+    '''
+    s, e = 1, n
+    while s <= e:
+        m = s + (e-s) // 2
+        q = n // m
+        if m == q:
+            # m divides n into exact m parts, i.e found exact square root
+            return m
+        elif q > m:
+            # m divides n into more than m parts, i.e more parts than expected so increase the divider
+            s = m+1
+        else:
+            # m divides n into less than m parts i.e less parts than expected so decrease the divider
+            e = m-1
+    return e
 
 # 6
 def near(arr, target):
@@ -129,7 +156,6 @@ def near(arr, target):
         else:
             return mid
     return end if abs(arr[start] - target) > abs(arr[end] - target) else start
-
 
 # 7
 def start_and_end(arr, target):
@@ -342,6 +368,8 @@ def find_rotation_count_in_sorted_array(nums: List[int], unique=False) -> int:
     else:
         pivot_idx = find_pivot_in_rotated_sorted_array_with_duplicates(nums)
     return pivot_idx + 1
+
+
 
 
 if __name__ == '__main__':

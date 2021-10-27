@@ -1,4 +1,6 @@
 import operator
+from typing import List
+import functools as ft
 
 f1 = operator.itemgetter(3)
 t1 = f1((1,2,3,4,4))
@@ -28,3 +30,20 @@ le = [e1, e2, e3]
 
 s_le = sorted(le, key=operator.attrgetter('age'))
 print(s_le)  # [Rupali - 22, Vishwa - 23, Manan - 25]
+
+# Flattening a List
+def flatten_list(l: List[List[int]])->List[int]:
+    return ft.reduce(operator.iconcat, l, [])
+
+
+# Max min of list
+# Find the small or big element index
+
+l = [4,5,2,8,9,1,7,0]
+b = max(range(len(l)), key=l.__getitem__)
+s = min(range(len(l)), key=l.__getitem__)
+
+b2 = min(range(len(l)), key=lambda x: operator.methodcaller('__getitem__', x)(l))
+b1 = max(range(len(l)), key=lambda x: operator.methodcaller('__getitem__', x)(l))
+
+print('max idx-> ', b, ' min idx-> ', s)  # max idx->  4  min idx->  7

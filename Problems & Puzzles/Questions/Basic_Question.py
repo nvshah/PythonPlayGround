@@ -1,6 +1,7 @@
 import math
 # Recursive Approach
 from typing import List
+import functools as ft
 
 # 1
 def isArmStrong(n):
@@ -18,22 +19,24 @@ def isPrime(n):
     Also 2 & 3 are only consecutive prime numbers, so
     Any num can be either divide by {1, itself, 2, 3}
     '''
-    if n < 1:
-        return n
+    if n < 3:
+        return True
 
     def _app1():
         # Square Root Range
         for i in range(2, math.isqrt(n) + 1):
             if n % i == 0:
-                return True
+                return False
+        return True
 
     def _app2():
         # Square Range
         c = 2
         while c * c <= n:
             if n % c == 0:
-                return True
+                return False
             c += 1
+        return True
 
     return _app1()
 
@@ -74,6 +77,24 @@ def getDigitsCount(n):
 
     return _app4(num)
 
+def sumOfDigits(n):
+
+    def _app1(n):
+        s = 0
+        while n:
+            q, r = divmod(n, 10)
+            n, s = q, s+r
+        return s
+
+    def _app2(n):
+        if n == 0:
+            return 0
+        q, r = divmod(n, 10)
+        return r + _app2(q)
+
+    return _app2(n)
+
+
 # 4
 def isEven(n):
     def _app1(n):
@@ -88,7 +109,7 @@ def isEven(n):
     return _app1(abs(n))  # Even will remain even regardless of negative or positive
 
 # 5
-def isPalindrome(self, x: int) -> bool:
+def isPalindrome(x: int) -> bool:
     if x < 0: return False  # all negative nums will not be a palindrom as of `-` sign
     t_x = x                 # temp variable for x
     i = r_x = 0             # r_x is to hold reversed number
@@ -97,6 +118,25 @@ def isPalindrome(self, x: int) -> bool:
         r_x = r_x * 10 + m
         i += 1
     return x == r_x
+
+def isPalindromeStr(x: str) -> bool:
+    assert x, 'Empty String !!!'
+    x = x.lower()
+    for i in range(len(x) // 2):
+        if x[i] != x[-1-i]:
+            return False
+    return True
+
+def min_max_item_indices(l):
+    '''return tuple :- (min_idx, max_idx)'''
+    size = len(l)
+    b_i = max(range(size), key=l.__getitem__)
+    s_i = min(range(size), key=l.__getitem__)
+
+    # b2 = min(range(len(l)), key=lambda x: op.methodcaller('__getitem__', x)(l))
+    # b1 = max(range(len(l)), key=lambda x: op.methodcaller('__getitem__', x)(l))
+
+    return (s_i, b_i)  # (min_idx, max_idx)
 
 def permutation(l: List[int]):
     '''
@@ -199,15 +239,99 @@ def fibonacci(n):
             a, b = b, a+b
         return b
 
+    @ft.cache
+    def fib(n):
+        print('calculating fib for: ', n)
+        if n <= 1:
+            return n
+        return fib(n-1) + fib(n-2)
 
+def babylonian_sqrt(num):
+    '''
+    Find the math.isqrt() via babylonian method of approximation
+    '''
+
+    def find_floor(arr, t):
+        '''return the index of element (assuming index start from 1)'''
+        s, e = 0, len(arr)-1
+        while s <= e:
+            m = s + (e - s) //2
+            if t > arr[m]:
+                s = m + 1
+            elif t < arr[m]:
+                e = m - 1
+            else:
+                return m + 1
+        return e + 1
+
+    def speculate_initial_val(n):
+        '''
+        The Rule of Twos and Sevens chooses an initial guess from among the candidates {2, 7, 20, 70, 200, 700, ...}
+        '''
+        zeros = pow(10, len(str(n)) // 2)
+        l, u = 2 * zeros, 7 * zeros
+        l_squared, u_squared = 4 * zeros, 49 * zeros
+        m = l_squared + (u_squared-l_squared) // 2  # closeness|proximity decision
+        i = l if n < m else u # initial val
+        return i
+
+    if num < 225:
+        sqs = [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225]
+        return find_floor(sqs, num)
+
+    i = speculate_initial_val(num)
+    #print('Initial : ', i)
+    # find the initial val
+    while True:
+        #b = round((i + num / i) / 2, decimal_precision)
+        #b = floor((i + num / i) / 2)
+        b = (i + num / i) / 2
+        #print('-> ', b)
+        if math.floor(i) == math.floor(b):
+            return math.floor(i)
+        else:
+            i = b
+
+def isqrt(n):
+    '''
+    math.isqrt() via Binary Search
+
+    Logic ->
+
+    Let's consider
+    number - n, divisor - d
+
+    if d divides n into exact d parts then we can say that d is exact square root of n
+    if d divides n into more than d parts so -> need to lower the divider
+    if d divides n into less than d parts sp -> need to increase the divider
+    '''
+    s, e = 1, n
+    while s <= e:
+        m = s + (e-s) // 2
+        q = n // m
+        if m == q:
+            # d divides n into exact d parts, i.e found exact square root
+            return m
+        elif q > m:
+            # d divides n into more than d parts, i.e more parts than expected so increase the divider
+            s = m+1
+        else:
+            # d divides n into less than d parts i.e less parts than expected so decrease the divider
+            e = m-1
+    return e
 
 if __name__ == '__main__':
     # for i in range(100, 1000):
-    print(isArmStrong(0))
+    # print(isArmStrong(0))
+    #
+    # print(getDigitsCount(-101))
+    #
+    #
+    # l = [1,2, 3]
+    # p = permutation(l)
+    # print(p)
+    print(babylonian_sqrt(100))
 
-    print(getDigitsCount(-101))
+    print(isPalindromeStr('racecar'))  # True
 
-
-    l = [1,2, 3]
-    p = permutation(l)
-    print(p)
+    print(sumOfDigits(1223))
