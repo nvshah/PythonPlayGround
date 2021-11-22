@@ -12,6 +12,7 @@ def insertion_sort(arr):
             j -= 1
 
 
+
 if __name__ == '__main__':
     a = [1,5,10,4,2,8]
     #a = [10,20,90,88]

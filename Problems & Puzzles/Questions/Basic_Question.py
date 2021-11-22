@@ -94,7 +94,6 @@ def sumOfDigits(n):
 
     return _app2(n)
 
-
 # 4
 def isEven(n):
     def _app1(n):

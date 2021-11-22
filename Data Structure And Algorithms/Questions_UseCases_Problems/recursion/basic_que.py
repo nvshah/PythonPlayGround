@@ -32,7 +32,32 @@ def revers_num(n):
 
     return _app3(n)
 
+def cnt_digits_in_num(n, digit):
+    ''' Good Eg of Return same val to above func call '''
+    assert digit // 10 == 0, "digit valid from 0-9"
+    if n == 0:
+        return int(digit == 0)
+
+    def helper(n, cnt):
+        nonlocal digit
+        # if n % 10 == n:
+        #     return cnt + 1 if n == digit else cnt
+        if n == 0:
+            return cnt
+        q, r = divmod(n, 10)
+        return helper(q, cnt + (r == digit))
+
+    return helper(n, 0)
+
+
 
 
 if __name__ == '__main__':
-    print(revers_num(1032))
+    #print(revers_num(1032))
+
+    print(cnt_digits_in_num(129292, 3))
+
+    a = [1, 5, 10, 8, 2]
+    b = sorted(a)
+
+
