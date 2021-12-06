@@ -1,3 +1,5 @@
+import bisect as bs
+
 def orderAgnosticBinarySearch(arr, target, nonDecreasing=None, start=0, end=-1):
     '''
     Binary Search - Basic Implementation i.e Order Agnostic Binary Search
@@ -195,12 +197,13 @@ def binary_search_enh(arr, target, fromLeft=False, fromRight=False):
                     break
     return ans
 
-
 if __name__ == '__main__':
     a = [2, 4, 6, 10, 30, 40, 40, 40, 40, 40, 55, 56, 56, 56, 56]
-    idx = binary_search_enh(a, 56, False, True)
-    print(idx)
+    # idx = binary_search_enh(a, 56, False, True)
+    # print(idx)
 
-    b = [1,2,3,4,4,10,20]
-    idx = binarySearch_rec(b, 10, 0, len(b)-1)
-    print(idx)
+    # b = [1,2,3,4,4,10,20]
+    # idx = binarySearch_rec(b, 10, 0, len(b)-1)
+    # print(idx)
+
+    print(bs.bisect_left(a, 40))

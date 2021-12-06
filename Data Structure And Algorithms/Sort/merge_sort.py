@@ -2,8 +2,6 @@
  Divide & conquer Technique
  Time :- O(n*lg(n))
 '''
-
-
 def merge_sort(arr):
     '''
      implement merge sort uing extra array (not in-place)

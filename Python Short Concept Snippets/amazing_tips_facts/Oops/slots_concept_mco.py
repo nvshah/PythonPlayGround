@@ -6,6 +6,12 @@ from timeit import timeit
 
 import pytest
 
+'''
+refer :- mcoding youtube
+gist :- slots are useful & way to get struct in python
+       because they consume less memory compare to dict
+'''
+
 
 def normal_class_example():
     print('NORMAL CLASS EXAMPLE')

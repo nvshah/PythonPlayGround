@@ -3,14 +3,22 @@ import math
 from typing import List
 import functools as ft
 
+from utils_handy import get_digits
+
 # 1
 def isArmStrong(n):
     '''
     Armstrong number is a number that is equal to the sum of cubes of its digits
     '''
-    n_s = str(n)
-    t = sum(map(lambda e: int(e) ** 3, n_s))
-    return t == n
+    def _app1(n):
+        n_s = str(n)
+        t = sum(map(lambda e: int(e) ** 3, n_s))
+        return t == n
+
+    def _app2(n):
+        return n == sum(get_digits(n, lambda x: x**3))
+
+    return _app2(n)
 
 # 2
 def isPrime(n):
@@ -39,6 +47,15 @@ def isPrime(n):
         return True
 
     return _app1()
+
+def getdigits(n, func=None):
+    '''
+    return generator of digits
+    if func provided then digit is mapped to that func & then returned
+    '''
+    while n != 0:
+        n, r = divmod(n, 10)
+        yield func(r) if func else r
 
 # 3 (MIMP)
 def getDigitsCount(n):
@@ -75,7 +92,10 @@ def getDigitsCount(n):
             cntr += 1
         return cntr
 
-    return _app4(num)
+    def _app5(n):
+        return len(list(getdigits(n)))
+
+    return _app5(num)
 
 def sumOfDigits(n):
 
@@ -91,6 +111,9 @@ def sumOfDigits(n):
             return 0
         q, r = divmod(n, 10)
         return r + _app2(q)
+
+    def _app3(n):
+        return sum(getdigits(n))
 
     return _app2(n)
 

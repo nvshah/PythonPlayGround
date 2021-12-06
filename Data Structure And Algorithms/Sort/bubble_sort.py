@@ -23,7 +23,6 @@ def bubble_sort_rec(arr):
         :param m: comparisions made so far
         :param s: swaapped in this turn c, m
         '''
-        print(c, m, s)
         if c == 0:  # all turns are over
             return
         if c == m:  # all comparisons are made in this turn
