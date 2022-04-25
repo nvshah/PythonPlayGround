@@ -5,7 +5,7 @@ def bubble_sort(arr):
     '''
     l = len(arr)
     for i in range(l-1):  # i is counter -> counts l-1 times atmost
-        swap_happen = False
+        swap_happen = False  # already sorted or not !
         for j in range(1, l-i):  # j is traverser
             if arr[j-1] > arr[j]:
                 arr[j-1], arr[j] = arr[j], arr[j-1]  # Swap
@@ -32,7 +32,7 @@ def bubble_sort_rec(arr):
         # m is also considered as ptr pting to idx in array
         if arr[m] > arr[m+1]:
             arr[m], arr[m+1] = arr[m+1], arr[m]  # swap
-            s = True # swap happens
+            s = True  # swap happens
         helper(c, m+1, s)  # 1 comparison made in this turn
     size = len(arr)
     helper(size-1, 0, False)  # comparisons needs to be made = size of arr - 1

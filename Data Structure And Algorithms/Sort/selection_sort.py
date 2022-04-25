@@ -11,7 +11,8 @@ def selection_sort(arr):
     '''
     l = len(arr)
     for pos in range(l-1, 0, -1):  # pos from rhs -> lhs
-        max_idx = max(range(pos+1), key=arr.__getitem__) # get max element index/location
+        # arg_max
+        max_idx = max(range(pos+1), key=arr.__getitem__)  # get max element index/location
         arr[max_idx], arr[pos] = arr[pos], arr[max_idx]  # swap max element to pos
 
 def selection_sort_rec(arr):

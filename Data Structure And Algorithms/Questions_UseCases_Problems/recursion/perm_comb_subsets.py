@@ -1,4 +1,6 @@
 from typing import List
+import itertools as it
+from collections import Counter as ctr
 
 '''
 SUBSET methods :- take it & ignore it
@@ -57,6 +59,25 @@ def subsets2(nums: List[int]) -> List[List[int]]:
 
     dfs(0)
     return res
+
+def subsets_with_duplicates(arr):
+    arr.sort()  # so that all duplicates are placed side by side
+    def dfs(p, up):
+        if not up: # nothing left to process
+            return [p]
+
+        # HINT :- ! consider repeated element as single entity
+
+        # 1 pick
+        f = up[0]
+        l = dfs([*p, f], up[1:])
+        # 2 unpick
+        # ignore all the elements {f}
+        *up, = it.dropwhile(lambda x: x == f, up)
+        r = dfs(p, up)
+        return [*l, *r]
+
+    return dfs([], arr)
 
 def permutation_dfs(arr):
     ''' Find Permutation via Explore & BackTrack '''

@@ -48,12 +48,31 @@ def is_num_in_power_of_2(n):
 
 def power(a, b):
     ans = 1
-    while b > 0 :
-        if b & 1:
+    while b > 0:
+        if b & 1:  # 1 at rHS bit
             ans *= a
         a *= a
-        b = b >> 1
+        b = b >> 1  # b divides 2
     return ans
+
+def power2(x, n):
+    '''
+    Approach :- using Recurrsion (Divide & Conquer)
+    T.C :- logarithmic (log(n))
+
+    NOTE :- pow() & log() are correlated to each other (probably inverse of each other)
+    '''
+    if x == 0: return 0
+    if n == 0: return 1
+    if n == 1: return x
+
+    q, r = divmod(n, 2)
+
+    half = power2(x, q)  # calc half
+
+    # in case if remainder left (ie one x is yet left to be multiplied)
+    # eg 3^5 = 3 * 3^4 * 3^4
+    return x*half*half if r else half*half
 
 def get_set_bits_cnt(n):
     def _app1(n):
@@ -81,7 +100,6 @@ def get_set_bits_cnt(n):
             n = n & (n-1)
 
     return _app3(n)
-
 
 def rhs_set_bit(n):
     ''' -n is in 2's complement  '''

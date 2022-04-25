@@ -174,17 +174,63 @@ def quick_sort_2(arr):
     sort(0, len(arr)-1)
 
 
+def quick_sort_3(arr):
+    def partition_by_lamuto(s, e):
+        '''
+        partition the array by lamuto 2 pointer methods
+        :param s: start index of array (inclusive)
+        :param e: stop index of array  (inclusive)
+        :return: return the correct index of pivot
+        '''
+        pivot = arr[e]  # pivot as the end
+        l = s
+        for r in range(s, e):
+            if arr[r] < pivot:
+                arr[l], arr[r] = arr[r], arr[l] # keep small element on left side
+                l += 1 # nect place to keep smmall eelement
+
+        # l is the place before which all the elements are less than pivot
+        # so place pivot at l & pivot is e
+        arr[l], arr[e] = arr[e], arr[l]
+
+        return l
+
+    def sort(s, e):
+        '''
+        sort the array inplace via Quick sort
+        :param s: start index of array (inclusive)
+        :param e: end index of array (inclusive)
+        :return: None
+        '''
+        if s >= e : # 0 or 1 sized array
+            return
+
+        # 1. partiton the array
+        p_i = partition_by_lamuto(s, e)
+        # 2. recursive sorting
+        sort(s, p_i-1) # sort left half
+        sort(p_i+1, e) # sort right half
+
+    sort(0, len(arr)-1)
+
+
+
+
+
+
+
 if __name__ == '__main__':
     a = [5, 4, 3, 2, 1]
     #a = [3, 8, 5, 4, 1, 2]
     a = [6, 3, 8, 10, 1, 2, 11, 9, 5]
 
     a = [1,6,2,7,3,8,4,9,5,10]
-    a = [90, 8, 3, 2, 1, 5, 10, 3, 2]
+    #a = [90, 8, 3, 2, 1, 5, 10, 3, 2]
 
-    a = [9, 8, 7, 6, 4, 2, 1]
+    #a = [9, 8, 7, 6, 4, 2, 1]
     #quick_sort_1(a)
-    quick_sort_1(a)
+    #quick_sort_1(a)
+    quick_sort_3(a)
     print(a)
 
 

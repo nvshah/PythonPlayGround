@@ -49,8 +49,24 @@ def cnt_digits_in_num(n, digit):
 
     return helper(n, 0)
 
+def myPow(x, n):
+    '''
+    Approach :- using Recurrsion (Divide & Conquer)
+    T.C :- logarithmic (log(n))
 
+    NOTE :- pow() & log() are correlated to each other (probably inverse of each other)
+    '''
+    if x == 0: return 0
+    if n == 0: return 1
+    if n == 1: return x
 
+    q, r = divmod(n, 2)
+
+    half = myPow(x, q)  # calc half
+
+    # in case if remainder left (ie one x is yet left to be multiplied)
+    # eg 3^5 = 3 * 3^4 * 3^4
+    return x*half*half if r else half*half
 
 if __name__ == '__main__':
     #print(revers_num(1032))

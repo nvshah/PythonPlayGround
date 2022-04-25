@@ -16,3 +16,12 @@ pick = [1,0,1,0,1]
 
 selected = it.compress(nums, pick)
 print(list(selected)) # [1,3,5]
+
+# Chained Comparision
+
+x, y, z = 1, 2, 1
+print( x != y != z)  # still x & z are equal
+
+# List to Tuple
+
+t = (*[1,2,3],)  # (1,2,3)
