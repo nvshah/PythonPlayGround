@@ -1,4 +1,6 @@
 from math import isqrt
+from functools import partial
+from operator import and_
 
 def factors(n):
     '''
@@ -24,6 +26,7 @@ def factors_sorted(n):
     '''
     first = []  # first half of factors
     second = [] # second half of factors
+    # square root intutively means that for this number to shrunk to its half
     for i in range(1, isqrt(n)+1):
         d, r = divmod(n, i)
         if r == 0:
@@ -61,6 +64,10 @@ def gcd_euc_rec(a, b):
 
 def lcm(a, b):
     return a*b / gcd_euc(a,b)
+
+def filterOddNums(lst):
+    *a, = filter(partial(and_, 1), lst)
+    return a
 
 
 

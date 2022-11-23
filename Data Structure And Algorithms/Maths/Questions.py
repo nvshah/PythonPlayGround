@@ -1,6 +1,6 @@
 from functools import reduce
 from operator import xor
-from math import log2
+from math import log2, ceil, sqrt, isqrt, floor
 
 '''
 range format for n bits :- -2^n-1 -> 2^n-1 - 1
@@ -123,6 +123,10 @@ def xor_a_to_b(a, b):
     ''' calculate xor from a -> b '''
     return xor_0_to_n(b) ^ xor_0_to_n(a-1)
 
+def total_perfect_squares_in(a, b):
+    '''Find total perfect squares in [a, b]'''
+    sq1, sq2 = ceil(sqrt(a)), floor(sqrt(b))
+    return sq2-sq1+1 if sq1 <= sq2 else 0
 
 
 if __name__ == '__main__':

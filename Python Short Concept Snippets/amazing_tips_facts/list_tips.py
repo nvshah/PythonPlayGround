@@ -27,5 +27,4 @@ print(id(a))  # 140614303925184  same as above
 b.append(10)
 print(a)     # [1, 2, 4, 5, 10]
 
-
-
+# 

@@ -49,3 +49,8 @@ s = "NipunShah"
 print(s.startswith("Nipun"))   # Correct
 print(s[:4] == "Nipun")        # Not Preferred
 
+#4---------------------------------
+
+# Find the string with largest length
+l = ['he', 'nipun', 'charusat']
+a = max(l, key=len, default='')  # default is useful when l is empty
